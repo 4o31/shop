@@ -1,0 +1,236 @@
+:root {
+  --bg: #0f1724;
+  --card: #0b1220;
+  --accent: #8b5cf6;
+  --muted: #94a3b8;
+  --glass: rgba(255, 255, 255, 0.04);
+  --glass2: rgba(255, 255, 255, 0.02);
+  --radius: 14px;
+  font-family: Inter, ui-sans-serif, system-ui, "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Meiryo", sans-serif;
+}
+html, body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden; /* ページ全体のスクロールを禁止 */
+  background: var(--bg);
+  color: #e6eef6;
+  -webkit-font-smoothing: antialiased;
+}
+body {
+  background:
+    radial-gradient(1200px 400px at 10% 10%, rgba(139, 92, 246, 0.12), transparent 6%),
+    radial-gradient(900px 300px at 90% 90%, rgba(34, 197, 94, 0.06), transparent 8%),
+    var(--bg);
+}
+body.modal-open {
+  overflow: hidden;
+}
+
+/* ▼▼▼ 変更点 (Flexレイアウトで高さを制御) ▼▼▼ */
+.wrap { 
+  max-width: 1100px; 
+  margin: 32px auto; 
+  padding: 28px;
+  /* ページの上下マージン(32px*2)を引いた高さを設定 */
+  height: calc(100vh - 64px); 
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+header { 
+  display: flex; 
+  align-items: center; 
+  gap: 18px; 
+  margin-bottom: 20px;
+  flex-shrink: 0; /* ヘッダーは縮まない */
+}
+/* ▲▲▲ ここまで ▲▲▲ */
+
+.title { line-height: 1; }
+.title h1 { margin: 0; font-size: 20px; }
+.title p { margin: 0; color: var(--muted); font-size: 13px; }
+.header__actions { margin-left: auto; text-align: right; }
+
+/* ▼▼▼ 変更点 (mainが残りの高さをすべて使う) ▼▼▼ */
+main {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 22px;
+  max-width: 1100px;
+  /* margin: 32px auto; を削除 (wrapが担当) */
+  flex-grow: 1; /* 利用可能な高さを埋める */
+  overflow: hidden; /* main自体がはみ出ないように */
+}
+@media (max-width: 900px) {
+  main { 
+    grid-template-columns: 1fr; 
+  }
+  aside { order: 2; }
+}
+
+/* --- ストア (index.html) --- */
+.store {
+  background: linear-gradient(180deg, var(--glass), transparent);
+  border-radius: var(--radius);
+  padding: 18px;
+  backdrop-filter: blur(6px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02), 0 10px 30px rgba(2, 6, 23, 0.6);
+  /* ▼▼▼ 変更点 (内部スクロールを許可) ▼▼▼ */
+  overflow-y: auto;
+}
+/* ▲▲▲ ここまで ▲▲▲ */
+
+.store__header { display: flex; justify-content: space-between; align-items: center; }
+.store__header h2 { margin: 0; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 14px; margin-top: 16px; }
+.card {
+  background: linear-gradient(180deg, var(--card), #071026);
+  border-radius: 12px;
+  padding: 12px;
+  user-select: none;
+  transition: transform .28s ease, box-shadow .18s ease;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+}
+.thumb { height: 86px; border-radius: 10px; background: linear-gradient(135deg, #111827, #0f1724); display: flex; align-items: center; justify-content: center; font-size: 22px; }
+.meta { margin-top: 10px; }
+.meta h3 { margin: 0; font-size: 15px; }
+.meta p { margin: 6px 0 0; color: var(--muted); font-size: 13px; }
+.price { margin-top: 10px; display: flex; justify-content: space-between; align-items: center; }
+.price__controls { display: flex; gap: 8px; }
+.btn { background: linear-gradient(90deg, var(--accent), #06b6d4); padding: 8px 12px; border-radius: 10px; color: #021124; font-weight: 700; border: none; cursor: pointer; }
+
+/* ▼▼▼ 変更点 (asideとpanelの調整) ▼▼▼ */
+aside { 
+  position: relative;
+  overflow-y: auto; /* カート/照会エリアが長くなった場合にスクロール */
+}
+.panel { 
+  background: linear-gradient(180deg, var(--card), #061023); 
+  padding: 16px; 
+  border-radius: 12px; 
+  /* position: sticky; は親が overflow:auto だと期待通り動かないため解除 */
+  position: relative; 
+  top: 0; 
+}
+/* ▲▲▲ ここまで ▲▲▲ */
+
+.panel h3 { margin: 0 0 8px 0; }
+.panel .panel-divider {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--glass);
+}
+.panel__cart-list { margin-top: 8px; }
+.panel__checkout-area { margin-top: 12px; }
+.cart-item { display: flex; align-items: center; gap: 8px; color: var(--muted); }
+.cart-item__price { font-size: 13px; }
+
+/* ▼▼▼ 変更点 (footerのレイアウト調整) ▼▼▼ */
+footer { 
+  margin-top: 22px; 
+  padding-top: 22px; 
+  border-top: 1px solid var(--glass); 
+  color: var(--muted); 
+  font-size: 13px; 
+  text-align: center;
+  flex-shrink: 0; /* フッターは縮まない */
+}
+/* ▲▲▲ ここまで ▲▲▲ */
+
+footer a { color: var(--accent); text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+
+/* --- 照会フォーム (aside内) --- */
+.receipt-checker { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 10px; 
+}
+.receipt-checker label { font-size: 13px; color: var(--muted); text-align: center; }
+.receipt-checker input {
+  background: var(--glass); 
+  border: 1px solid rgba(255, 255, 255, 0.05); 
+  color: #e6eef6;
+  font-size: 0.9rem;
+  padding: 10px 12px;
+  border-radius: 8px;
+  width: 100%; 
+  text-align: center; 
+  box-sizing: border-box;
+}
+.receipt-checker button {
+  padding: 10px 16px;
+  font-size: 0.9rem;
+}
+#receipt-check-result { margin-top: 4px; height: 1.2em; text-align: center; }
+#receipt-check-result.success { color: #22c55e; }
+#receipt-check-result.error { color: #f43f5e; }
+
+/* --- 照会結果 (aside内) --- */
+.receipt-details {
+  margin-top: 16px;
+  border-top: 1px dashed var(--muted);
+  padding-top: 12px;
+  display: none; /* JSで表示切替 */
+}
+.receipt-details.show {
+  display: block;
+}
+.receipt-details h4 {
+  color: var(--accent);
+  font-size: 0.9rem;
+  margin: 0 0 8px 0;
+}
+.receipt-details ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 8px 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+.receipt-details ul li {
+  padding: 4px 0;
+  border-bottom: 1px solid var(--glass2);
+}
+.receipt-details p {
+  text-align: right;
+  font-size: 14px;
+  margin: 8px 0 0;
+  font-weight: bold;
+}
+.receipt-details p.date {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: normal;
+  text-align: right;
+  margin-top: 2px;
+}
+
+/* --- モーダル (index.html) --- */
+.modal { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(2, 6, 23, 0.6); backdrop-filter: blur(4px); opacity: 0; pointer-events: none; transition: opacity .18s; z-index: 100; }
+.modal.show { opacity: 1; pointer-events: auto; }
+.modal .box { background: #071024; padding: 18px; border-radius: 12px; min-width: 320px; border: 1px solid rgba(255, 255, 255, 0.03); max-width: 400px; }
+.modal__title { margin: 0 0 10px 0; font-size: 1.1rem; }
+.modal__content { color: var(--muted); }
+.modal__content code { background: var(--glass); padding: 2px 6px; border-radius: 6px; font-size: 0.9em; }
+.modal__content ul { margin-top: 8px; padding-left: 20px; }
+.secret-badge { padding: 6px 10px; border-radius: 999px; background: rgba(139, 92, 246, 0.12); color: var(--accent); font-weight: 700; display: inline-block; }
+.checkout-summary { border-top: 1px solid var(--glass); border-bottom: 1px solid var(--glass); padding: 12px 0; margin: 12px 0; display: flex; flex-direction: column; gap: 4px; }
+.checkout-summary div { display: flex; justify-content: space-between; }
+.checkout-summary .total { font-size: 1.1em; font-weight: bold; color: #e6eef6; margin-top: 8px; }
+.checkout-summary .discounted { color: #22c55e; }
+.checkout-summary .original-price { text-decoration: line-through; color: var(--muted); font-size: 0.9em; }
+.discount-form { margin-top: 12px; display: flex; gap: 8px; }
+.discount-form input { flex-grow: 1; background: var(--glass2); border: 1px solid rgba(255, 255, 255, 0.05); color: #e6eef6; padding: 8px 10px; border-radius: 8px; }
+.discount-form button { background: var(--glass); color: var(--muted); border: none; padding: 8px 10px; border-radius: 8px; cursor: pointer; }
+.discount-message { font-size: 13px; margin-top: 6px; height: 1.2em; }
+.discount-message.success { color: #22c55e; }
+.discount-message.error { color: #f43f5e; }
+.modal__actions { margin-top: 16px; display: flex; justify-content: flex-end; gap: 10px; }
+.modal__actions .btn-close { background: var(--glass); color: var(--muted); }
+
+/* --- ヘルパー --- */
+.text-muted { color: var(--muted); }
+.text-sm { font-size: 13px; }
+.d-flex-between { display: flex; justify-content: space-between; align-items: center; }
+.hint { color: var(--muted); font-size: 13px; margin-top: 8px; }

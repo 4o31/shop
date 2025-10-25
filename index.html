@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title></title>
+<link rel="stylesheet" href="style/main.css">
+</head>
+<body id="app-body">
+<div class="wrap">
+  <header>
+    <div class="title">
+      <h1>Misskey Shop</h1>
+    </div>
+  </header>
+
+  <main>
+    <section class="store" id="store">
+      <div class="store__header">
+        <h2>アイテム一覧</h2>
+        <div class="hint" id="item-count">全 4 アイテム</div>
+      </div>
+      <div class="grid" id="grid">
+        </div>
+    </section>
+
+    <aside>
+      <div class="panel">
+        <h3>カート</h3>
+        <div class="panel__cart-list" id="cart-list"></div>
+        <div class="panel__checkout-area">
+          <button class="btn" id="checkout">購入手続きへ</button>
+        </div>
+
+        <h3 class="panel-divider">レシート照会</h3>
+        <div class="receipt-checker">
+          <label for="receipt-check-input" class="text-sm text-muted">レシートIDを入力</label>
+          <input type="text" id="receipt-check-input" placeholder="64文字のハッシュ値">
+          <button id="receipt-check-btn" class="btn">照会</button>
+          <div id="receipt-check-result" class="text-sm"></div>
+        </div>
+        
+        <div id="receipt-details" class="receipt-details">
+          </div>
+        </div>
+    </aside>
+  </main>
+
+  <footer>
+    © 2025 Misskey Shop. All rights reserved.
+    </footer>
+</div>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="box" id="modal-box">
+    </div>
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>
